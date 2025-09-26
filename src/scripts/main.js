@@ -1,5 +1,5 @@
 import '../styles/style.css'
-import batoiLogo from '../../public/logoBatoi.png'
+import batoiLogo from '/logoBatoi.png'
 
 
 document.querySelector('#app').innerHTML = `
