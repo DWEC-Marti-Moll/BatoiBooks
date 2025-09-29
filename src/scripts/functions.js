@@ -1,20 +1,20 @@
 'use strict';
 
-const getBookById = (books, number) =>{
+/* const getBookById = (books, number) =>{
     const book = books.find(id => id.id === number);
     if(!book) throw new Error('Book not found');
     return book;
-}
-const getBookIndexById = (books, number) =>{
+} */
+/* const getBookIndexById = (books, number) =>{
     const index = books.findIndex(id => id.id === number);
     if(index === -1) throw new Error('Book not found');
     return index;
-}
-const bookExists = (books, userId, moduleCode) => books.some(book => book.userId === userId && book.moduleCode === moduleCode);
-const booksFromUser = (books, userId) => books.filter(book => book.userId === userId);
-const booksFromModule = (books, moduleCode) => books.filter(book => book.moduleCode === moduleCode);
-const booksCheeperThan = (books, price) => books.filter(book => book.price < price);
-const booksWithStatus = (books, status) => books.filter(book => book.status === status);
+} */
+/* const bookExists = (books, userId, moduleCode) => books.some(book => book.userId === userId && book.moduleCode === moduleCode); */
+/* const booksFromUser = (books, userId) => books.filter(book => book.userId === userId); */
+/* const booksFromModule = (books, moduleCode) => books.filter(book => book.moduleCode === moduleCode); */
+/* const booksCheeperThan = (books, price) => books.filter(book => book.price < price); */
+/* const booksWithStatus = (books, status) => books.filter(book => book.status === status); */
 const averagePriceOfBooks = (books) =>{
     if (books.length == 0) return '0.00 €';
     const total = books.reduce((sum, book) => sum + book.price, 0);
