@@ -4,7 +4,11 @@ export default class Modules{
         this.data = [];
     }
     
-    populate(){
-        this.data = [...datos];
-    }
+    populate(modulesData, courseId) {
+        this.data = modulesData.map(
+          m => new Module(m.code, m.cliteral, m.vliteral, courseId)
+        );
+      }
+      
+      
 }

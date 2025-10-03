@@ -1,7 +1,9 @@
 import '../styles/style.css';
 import batoiLogo from '/logoBatoi.png';
-import * as functions from './functions.js';
+//import * as functions from './functions.js';
 import data from '../services/datos.js';
+import Books from '../model/books.class.js';
+const books = new Books();
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -12,9 +14,19 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
-console.log("Todos los libros del usuario 4:");
-console.log(functions.booksFromUser(data.books, 4));
-console.log("Todos los libros del módulo 5021 que están en buen estado:");
-console.log(functions.booksWithStatus(functions.booksFromModule(data.books, "5021"), "good"));
-console.log("Incrementar un 10% el precio de los libros");
-console.log(functions.incrementPriceOfbooks(data.books, 0.1));
+try{
+  console.log("Todos los libros del Módulo 5021:");
+  const booksModule = books.booksFromModule(5021);
+  booksModule.forEach(book => console.log(book));
+
+  console.log("Todos los libros con estado 'new':");
+  const booksStatus = books.booksWithStatus('new');
+  booksStatus.forEach(book => console.log(book));
+
+  console.log("Incrementar el precio de los libros un 10% y mostrarlos:");
+  const incrementedBooks = books.incrementPriceOfbooks(0.10);
+  incrementedBooks.forEach(book => console.log(book));
+  
+} catch(error){
+  alert(error.message);
+}
