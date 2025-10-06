@@ -3,7 +3,16 @@ import batoiLogo from "/logoBatoi.png";
 //import * as functions from './functions.js';
 import data from "../services/datos.js";
 import Books from "../model/books.class.js";
+import Users from "../model/users.class.js";
+import Modules from "../model/modules.class.js";
+
+const users = new Users();
 const books = new Books();
+const modules = new Modules();
+
+users.populate(data.users);
+books.populate(data.books);
+modules.populate(data.modules);
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -16,16 +25,16 @@ document.querySelector("#app").innerHTML = `
 `;
 try {
   console.log("Todos los libros del Módulo 5021:");
-  const booksModule = books.booksFromModule(5021);
-  booksModule.forEach((book) => console.log(book));
+  const booksModule = books.booksFromModule('5021');
+  booksModule.forEach((book) => console.log(book.toString()));
 
   console.log("Todos los libros con estado 'new':");
-  const booksStatus = books.booksWithStatus("new");
-  booksStatus.forEach((book) => console.log(book));
+  const booksStatus = books.booksWithStatus('new');
+  booksStatus.forEach((book) => console.log(book.toString()));
 
   console.log("Incrementar el precio de los libros un 10% y mostrarlos:");
   const incrementedBooks = books.incrementPriceOfbooks(0.1);
-  incrementedBooks.forEach((book) => console.log(book));
+  incrementedBooks.forEach((book) => console.log(book.toString()));
 } catch (error) {
   alert(error.message);
 } */
