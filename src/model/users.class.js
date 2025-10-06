@@ -1,4 +1,5 @@
 import User from "./user.class.js";
+const API_URL = 'http://localhost:3000/users';
 export default class Users {
   constructor() {
     this.data = [];

@@ -45,6 +45,7 @@ export default class Books {
     if (index === -1) throw new Error("Book not found");
     return index;
   };
+
   bookExists = (userId, moduleCode) =>
     this.data.some(
       (book) => book.userId === userId && book.moduleCode === moduleCode

@@ -1,4 +1,4 @@
-import "../styles/style.css";
+/* import "../styles/style.css";
 import batoiLogo from "/logoBatoi.png";
 //import * as functions from './functions.js';
 import data from "../services/datos.js";
@@ -28,4 +28,12 @@ try {
   incrementedBooks.forEach((book) => console.log(book));
 } catch (error) {
   alert(error.message);
+} */
+import {getDBUsers} from "../services/users.api.js";
+
+try {
+  const users = await getDBUsers();
+  console.log(users);
+}catch(error){
+  console.error("Error fetching users:", error);
 }

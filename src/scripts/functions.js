@@ -1,5 +1,5 @@
-"use strict";
-/* const NOTE_TYPE = 'Apunts';
+/* "use strict";
+const NOTE_TYPE = 'Apunts';
 
 const getBookById = (books, number) =>{
     const book = books.find(id => id.id === number);
@@ -28,7 +28,7 @@ const incrementPriceOfbooks = (books, percentage) =>{
     return books.map(book => ({
         ...book, 
         price: book.price + book.price * percentage}));
-} */
+} 
 const getUserById = (users, userId) => {
   const user = users.find((id) => id.id === userId);
   if (!user) throw new Error("User not found");
@@ -67,3 +67,4 @@ export {
   getUserByNickName,
   getModuleByCode,
 };
+ */
