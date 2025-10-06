@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /* const NOTE_TYPE = 'Apunts';
 
 const getBookById = (books, number) =>{
@@ -30,40 +30,40 @@ const incrementPriceOfbooks = (books, percentage) =>{
         price: book.price + book.price * percentage}));
 } */
 const getUserById = (users, userId) => {
-    const user = users.find(id => id.id === userId);
-    if(!user) throw new Error('User not found');
-    return user;
-}
-const getUserIndexById = (users, userId) =>{
-    const user = users.findIndex(id => id.id === userId);
-    if(user == -1) throw new Error('User not found');
-    return user;
-}
-const getUserByNickName = (users, nick) =>{
-    const user = users.find(name => name.nick === nick);
-    if(!user) throw new Error('User not found');
-    return user;
-}
-const getModuleByCode = (modules, moduleCode) =>{
-    const module = modules.find(mod => mod.code === moduleCode);
-    if(!module) throw new Error('Module not found');
-    return module;
-}
+  const user = users.find((id) => id.id === userId);
+  if (!user) throw new Error("User not found");
+  return user;
+};
+const getUserIndexById = (users, userId) => {
+  const user = users.findIndex((id) => id.id === userId);
+  if (user == -1) throw new Error("User not found");
+  return user;
+};
+const getUserByNickName = (users, nick) => {
+  const user = users.find((name) => name.nick === nick);
+  if (!user) throw new Error("User not found");
+  return user;
+};
+const getModuleByCode = (modules, moduleCode) => {
+  const module = modules.find((mod) => mod.code === moduleCode);
+  if (!module) throw new Error("Module not found");
+  return module;
+};
 
-export{
-    getBookById,
-    getBookIndexById,
-    bookExists,
-    booksFromUser,
-    booksFromModule,
-    booksCheeperThan,
-    booksWithStatus,
-    averagePriceOfBooks,
-    booksOfTypeNotes,
-    booksNotSold,
-    incrementPriceOfbooks,
-    getUserById,
-    getUserIndexById,
-    getUserByNickName,
-    getModuleByCode
-}
+export {
+  getBookById,
+  getBookIndexById,
+  bookExists,
+  booksFromUser,
+  booksFromModule,
+  booksCheeperThan,
+  booksWithStatus,
+  averagePriceOfBooks,
+  booksOfTypeNotes,
+  booksNotSold,
+  incrementPriceOfbooks,
+  getUserById,
+  getUserIndexById,
+  getUserByNickName,
+  getModuleByCode,
+};
