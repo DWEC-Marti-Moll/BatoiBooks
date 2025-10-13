@@ -21,15 +21,12 @@ export default class Books {
   };
 
   removeBook = (bookId) => {
-    const index = this.data.findIndex((book) => book.id === bookId);
-    if (index === -1) throw new Error("Book not found");
+    const index = this.getBookById(bookId);
     this.data.splice(index, 1);
   };
 
   changeBook(newBook) {
-    const index = this.data.findIndex((book) => book.id === newBook.id);
-    if (index === -1) throw new Error("Book not found");
-
+    const index = this.getBookById(newBook);
     const updatedBook = new Book(newBook);
     this.data[index] = updatedBook;
     return updatedBook;
