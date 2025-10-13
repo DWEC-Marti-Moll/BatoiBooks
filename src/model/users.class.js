@@ -1,33 +1,52 @@
 import User from "./user.class.js";
-const API_URL = 'http://localhost:3000/users';
+import * as api from "../services/users.api.js";
 export default class Users {
   constructor() {
     this.data = [];
   }
 
-  populate = (users) => {
-    this.data = users.map(
-      (user) => new User(user.id, user.nick, user.email, user.password)
-    );
+  populate = async () => {
+    const users = await api.getDBUsers();
+    this.data = users.map((u) => new User(u.id, u.nick, u.email, u.password));
   };
 
-  addUser(user) {
-    const id = this.data.length
-      ? Math.max(...this.data.map((u) => u.id)) + 1
-      : 1;
-    const newUser = new User(id, user.nick, user.email, user.password);
+  async addUser(user) {
+    const newUserData = await api.addDBUser(user);
+    const newUser = new User(
+      newUserData.id,
+      newUserData.nick,
+      newUserData.email,
+      newUserData.password
+    );
     this.data.push(newUser);
     return newUser;
   }
 
-  removeUser(id) {
-    const index = this.getUserIndexById(id);
-    return this.data.splice(index, 1);
+  async removeUser(id) {
+    const user = this.getUserById(id);
+    await api.removeDBUser(id);
+    this.data = this.data.filter((u) => u.id !== id);
+    return user;
   }
 
-  changeUser(user) {
+  async changeUser(user) {
     const index = this.getUserIndexById(user.id);
-    this.data[index] = new User(user.id, user.nick, user.email, user.password);
+    const updatedData = await api.changeDBUser(user);
+    const updatedUser = new User(
+      updatedData.id,
+      updatedData.nick,
+      updatedData.email,
+      updatedData.password
+    );
+    this.data[index] = updatedUser;
+    return updatedUser;
+  }
+
+  async changeUserPassword(id, newPasswd){
+    const index = this.getUserIndexById(id);
+
+    const updatedData = await api.changeDBUserPassword(id, newPasswd);
+    this.data[index].password = updatedData.password;
     return this.data[index];
   }
 

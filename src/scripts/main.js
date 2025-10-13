@@ -38,11 +38,37 @@ try {
 } catch (error) {
   alert(error.message);
 } */
-import {getDBUsers} from "../services/users.api.js";
+import { getDBBooks, getDBBook, addDBBook, removeDBBook, changeDBBook } from "../services/books.api.js";
+import { getDBUsers, getDBUser, addDBUser, removeDBUser } from "../services/users.api.js";
+import Book from "../model/book.class.js";
+import User from "../model/user.class.js";
+
+const si = [57, "5021", "McGraw-Hill", 75, 273, "new"];
+const si2 = [5, "Jervasio", "jervasio@gmail.com", "password"];
+const book = new Book(si);
+const user = new User(si2);
 
 try {
-  const users = await getDBUsers();
-  console.log(users);
-}catch(error){
+  console.log("Users: ");
+  console.log(await getDBUsers());
+  console.log("User 3: ");
+  console.log(await getDBUser(3));
+  console.log("Books: ");
+  console.log(await getDBBooks());
+  console.log("Book 10: ");
+  console.log(await getDBBook(10));
+  //console.log("Add book: ");
+  //console.log(await addDBBook(book));
+  //console.log("Add user: ");
+  //console.log(await addDBUser(user));
+  //console.log("Delete book: ");
+  //console.log(await removeDBBook(9));
+  //console.log("Delete user: ");
+  //console.log(await removeDBUser(2));
+  //console.log("Change book: ");
+  //console.log(await changeDBBook(book));
+  //console.log("Change user: ");
+  //console.log(await changeDBUser(user));
+} catch (error) {
   console.error("Error fetching users:", error);
 }
