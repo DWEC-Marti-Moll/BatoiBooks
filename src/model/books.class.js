@@ -75,12 +75,6 @@ export default class Books {
   booksNotSold() {
     return this.data.filter((book) => !book.soldDate); // devuelve los libros que no tienen fecha de venta
   }
-  incrementPriceOfbooks = (percentage) => {
-    return this.data.map((book) => ({
-      ...book, // copia el objeto book
-      price: book.price + book.price * percentage,
-    }));
-  };
   toString() {
     return `Books: ${this.data.toString()}`;
   }

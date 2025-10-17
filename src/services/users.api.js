@@ -22,6 +22,12 @@ export async function addDBUser(user) {
   return await response.json();
 }
 
+export async function getDBUserById(userId) {
+  const response = await fetch(URL + "/" + userId);
+  if (!response.ok) throw new Error("User not found");
+  return await response.json();
+}
+
 export async function removeDBUser(userId) {
   const response = await fetch(URL + "/" + userId, { method: "DELETE" });
   if (!response.ok) throw new Error("User not found");

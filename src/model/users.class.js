@@ -23,7 +23,7 @@ export default class Users {
   };
 
   removeUser = async (id) => {
-    const user = this.getUserById(id);
+    const user = await this.getUserById(id);
     await api.removeDBUser(id);
     this.data = this.data.filter((u) => u.id !== id);
     return user;
@@ -50,14 +50,13 @@ export default class Users {
     return this.data[index];
   };
 
-  getUserById = (userId) => {
-    const user = this.data.find((id) => id.id === userId);
-    if (!user) throw new Error("User not found");
-    return user;
+  getUserById = async (userId) => {
+    const user = await api.getDBUserById(userId);
+    return new User(user.id, user.nick, user.email, user.password);
   };
 
   getUserIndexById = (userId) => {
-    const user = this.data.findIndex((id) => id.id === userId);
+    const user = this.data.findIndex((id) => id.id == userId);
     if (user == -1) throw new Error("User not found");
     return user;
   };
