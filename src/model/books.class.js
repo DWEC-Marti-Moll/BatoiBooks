@@ -1,14 +1,14 @@
 import Book from "./book.class.js";
+import * as api from "../services/books.api.js";
 export default class Books {
   constructor() {
     this.data = [];
     this.idLibros = 0;
   }
 
-  populate = (books) => {
+  populate = async () => {
+    const books = await api.getDBBooks();
     this.data = books.map((book) => new Book(book));
-    this.idLibros =
-      this.data.length > 0 ? Math.max(...this.data.map((book) => book.id)) : 0;
   };
 
   addBook = (book) => {
@@ -20,17 +20,20 @@ export default class Books {
     return newBook;
   };
 
-  removeBook = (bookId) => {
-    const index = this.getBookById(bookId);
-    this.data.splice(index, 1);
+  removeBook = async (bookId) => {
+    const book = this.getBookById(bookId);
+    await api.removeDBBook(bookId);
+    this.data = this.data.filter((b) => b.id !== bookId);
+    return book;
   };
 
-  changeBook(newBook) {
-    const index = this.getBookById(newBook);
-    const updatedBook = new Book(newBook);
+  changeBook = async (book) => {
+    const index = this.getBookIndexById(book.id);
+    const updatedData = await api.changeDBBook(book);
+    const updatedBook = new Book(updatedData);
     this.data[index] = updatedBook;
     return updatedBook;
-  }
+  };
 
   getBookById = (bookId) => {
     const book = this.data.find((id) => id.id === bookId);
