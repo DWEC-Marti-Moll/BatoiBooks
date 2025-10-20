@@ -1,4 +1,4 @@
-const URL = "http://localhost:3000/books";
+const URL = import.meta.env.VITE_URL_API + "/books";
 
 export async function getDBBooks() {
   const response = await fetch(URL);
