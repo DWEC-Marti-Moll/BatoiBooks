@@ -1,46 +1,90 @@
 import "../styles/style.css";
 import batoiLogo from "/logoBatoi.png";
-
-import Books from "../model/books.class.js";
-import Users from "../model/users.class.js";
-import Modules from "../model/modules.class.js";
-
-const users = new Users();
-const books = new Books();
-const modules = new Modules();
+import Controller from "../controller/controller.class";
 
 document.querySelector("#app").innerHTML = `
-  <div>
-      <img src="${batoiLogo}" class="logo" alt="Batoi logo" />
+  <header>
+    <img src="${batoiLogo}" class="logo" alt="Batoi logo" />
     <h1>BatoiBooks</h1>
-    <p class="texto">
-      Abre la consola para ver el resultado
-    </p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#list">Ver Libros</a></li>
+      <li><a href="#form">Añadir Libro</a></li>
+      <li><a href="#about">Acerca de...</a></li>
+    </ul>
+  </nav>
+
+  <div id="messages"></div>
+
+  <div id="main">
+    <div id="list"></div>
+
+    <div id="remove">
+      <label for="bookId">ID del libro:</label>
+      <input type="text" id="bookId" placeholder="Introduce el ID" />
+      <button id="removeBtn">Borrar libro</button>
+    </div>
+
+    <div id="form">
+      <h2>Añadir libro</h2>
+      <form id="bookForm">
+        <div>
+          <label for="title">Título:</label>
+          <input type="text" id="title" name="title" required minlength="2" placeholder="Introduce el título del libro" />
+        </div>
+
+        <div>
+          <label for="author">Autor:</label>
+          <input type="text" id="author" name="author" required minlength="2" placeholder="Introduce el autor" />
+        </div>
+
+        <div>
+          <label for="id-module">Módulo:</label>
+          <select id="id-module" name="module" required>
+          <option>- Selecciona un módulo -</option>
+          </select>
+        </div>
+
+        <div>
+          <span>Estado:</span><br />
+          <label>
+            <input type="radio" name="status" value="new" required/>
+            Nuevo
+          </label>
+          <label>
+            <input type="radio" name="status" value="good" />
+            Bueno
+          </label>
+          <label>
+            <input type="radio" name="status" value="bad" />
+            Malo
+          </label>
+        </div>
+
+        <div>
+          <label for="year">Año de publicación:</label>
+          <input type="number" id="year" name="year" required min="1900" max="2025" />
+        </div>
+
+        <div>
+          <button type="submit">Guardar</button>
+          <button type="reset">Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="about">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi.</p>
+    </div>
   </div>
+
+  <footer>
+    <p>Martí Moll Seguí ----- DWEC</p>
+  </footer>
 `;
-async function init() {
-  try {
-    await Promise.all([users.populate(), modules.populate(), books.populate()]);
-
-    console.log("----- Todos los libros -----");
-    console.log(books.toString());
-
-    console.log("----- Todos los usuarios -----");
-    console.log(users.toString());
-
-    console.log("----- Todos los módulos -----");
-    console.log(modules.toString());
-
-    console.log("----- Libros del Módulo 5021 -----");
-    const books5021 = books.booksFromModule("5021");
-    console.log(books5021.toString());
-
-    console.log("----- Libros nuevos -----");
-    const newBooks = books.booksWithStatus("new");
-    console.log(newBooks.toString());
-  } catch (error) {
-    console.error("Error: ", error.message);
-  }
-}
-
-init();
+document.addEventListener("DOMContentLoaded", () => {
+  const myController = new Controller();
+  myController.init();
+});
