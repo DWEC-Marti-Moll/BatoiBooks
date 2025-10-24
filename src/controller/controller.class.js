@@ -12,8 +12,8 @@ export default class Controller {
   }
 
   async init() {
-    /* this.view.setBookSubmitHandler(this.handleSubmitBook.bind(this));
-    this.view.setBookRemoveHandler(this.handleRemoveBook.bind(this)); */
+    this.view.setBookSubmitHandler(this.handleSubmitBook.bind(this));
+    this.view.setBookRemoveHandler(this.handleRemoveBook.bind(this));
     try {
       await Promise.all([
         this.books.populate(),
@@ -21,8 +21,22 @@ export default class Controller {
         this.users.populate(),
       ]);
       this.view.renderModulesInSelect(this.modules.data);
+      this.view.renderBooks(this.books.data, this.modules.data);
+      
     } catch (err) {
       this.view.showMessage("error", `Error: ${err.message}`);
     }
+  }
+
+  handleSubmitBook() {
+    this.books.addBook(book);
+    this.view.addBook(book);
+    this.view.showMessage("info", "Libro añadido con éxito");
+  }
+
+  handleRemoveBook() {
+    this.books.removeBook(id);
+    this.view.removeBook(id);
+    this.view.showMessage("info", `Libro con ID ${id} eliminado.`);
   }
 }

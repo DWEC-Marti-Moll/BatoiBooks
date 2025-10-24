@@ -31,41 +31,46 @@ document.querySelector("#app").innerHTML = `
       <h2>Añadir libro</h2>
       <form id="bookForm">
         <div>
-          <label for="title">Título:</label>
-          <input type="text" id="title" name="title" required minlength="2" placeholder="Introduce el título del libro" />
-        </div>
-
-        <div>
-          <label for="author">Autor:</label>
-          <input type="text" id="author" name="author" required minlength="2" placeholder="Introduce el autor" />
-        </div>
-
-        <div>
           <label for="id-module">Módulo:</label>
           <select id="id-module" name="module" required>
           <option>- Selecciona un módulo -</option>
           </select>
         </div>
+        
+        <div>
+          <label for="publisher">Editorial:</label>
+          <input type="text" id="publisher" name="publisher" required/>
+        </div>
+        
+        <div>
+          <label for="price">Precio:</label>
+          <input type="number" id="price" name="price" required>
+        </div>
+
+        <div>
+          <label for="pages">Páginas:</label>
+          <input type="number" id="pages" name="pages" required>
+        </div>
 
         <div>
           <span>Estado:</span><br />
           <label>
-            <input type="radio" name="status" value="new" required/>
+            <input type="radio" name="status" id="new" value="new" required/>
             Nuevo
           </label>
           <label>
-            <input type="radio" name="status" value="good" />
+            <input type="radio" name="status" id="good" value="good" />
             Bueno
           </label>
           <label>
-            <input type="radio" name="status" value="bad" />
+            <input type="radio" name="status" id="bad" value="bad" />
             Malo
           </label>
         </div>
 
         <div>
-          <label for="year">Año de publicación:</label>
-          <input type="number" id="year" name="year" required min="1900" max="2025" />
+          <label for="comment">Comentarios:</label>
+          <textarea id"comment" name="comment" rows="4" cols="40"></textarea>
         </div>
 
         <div>

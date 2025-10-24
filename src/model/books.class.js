@@ -11,11 +11,9 @@ export default class Books {
     this.data = books.map((book) => new Book(book));
   };
 
-  addBook = (book) => {
-    const id = this.data.length
-      ? Math.max(...this.data.map((b) => b.id)) + 1
-      : 1;
-    const newBook = new Book({ id, ...book });
+  addBook = async (book) => {
+    const newBookData = await api.addDBBook(book);
+    const newBook = new Book(newBookData);
     this.data.push(newBook);
     return newBook;
   };
