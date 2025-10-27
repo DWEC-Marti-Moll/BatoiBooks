@@ -30,50 +30,53 @@ export default class View {
     });
   }
 
+  renderBook(book, modules) {
+  
+    const module = modules.find(
+      (mod) => String(mod.code) === String(book.moduleCode)
+    );
+    const moduleName = module ? module.cliteral : "Módulo desconocido";
+
+    const bookDiv = document.createElement("div");
+    bookDiv.className = "card";
+    bookDiv.innerHTML = `
+      <img src="${book.photo}" alt="Libro: ${book.id}">
+      <div>
+        <h3>${moduleName} (${book.moduleCode})</h3>
+        <h4>${book.publisher}</h4>
+        <p>${book.pages} páginas</p>
+        <p>Estado: ${book.status}</p>
+        <p>${book.soldDate ? `Vendido el ${book.soldDate}` : "En venta"}</p> 
+        <p>${book.comments}</p>
+        <h4>${book.price} €</h4>
+      </div>
+    `;
+    return bookDiv;
+  }
+
   renderBooks(books, modules) {
     this.booksList.innerHTML = "";
     books.forEach((book) => {
-      const module = modules.find((mod) => mod.code === book.moduleCode);
-      const bookDiv = document.createElement("div");
-      bookDiv.className = "card";
-      bookDiv.innerHTML = `
-        <img src="${book.photo}" alt="Libro: ${book.id}">
-        <div>
-          <h3>${module.cliteral} (${book.moduleCode})</h3>
-          <h4>${book.publisher}</h4>
-          <p>${book.pages} páginas</p>
-          <p>Estado: ${book.status}</p>
-          <p>${book.soldDate ? `Vendido el ${book.soldDate}` : "En venta"}</p> 
-          <p>${book.comments}</p>
-          <h4>${book.price} €</h4>
-        </div>
-      `;
+      const bookDiv = this.renderBook(book, modules);
       this.booksList.appendChild(bookDiv);
     });
   }
 
-  removeBook(id) {}
-
-  addBook(book) {}
+  removeBook(id) {
+    const bookCards = this.booksList.getElementsByClassName("card");
+    for (let card of bookCards) {
+      if (card.querySelector("img").alt === `Libro: ${id}`) {
+        this.booksList.removeChild(card);
+        break;
+      }
+    }
+  }
 
   setBookSubmitHandler(callback) {
     this.bookForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const module = this.idModule.value;
-      const publisher = this.publisher.value;
-      const price = parseFloat(this.price.value);
-      const pages = parseInt(this.pages.value);
-      let status = "";
-      const comment = this.comment.value;
-      if (this.statusBad.checked) {
-        status = this.statusBad.value;
-      } else if (this.statusGood.checked) {
-        status = this.statusGood.value;
-      } else {
-        status = this.statusNew.value; // Ya que el status es required
-      }
-
-      const payload = [module, publisher, price, pages, status, comment];
+      const formData = new FormData(this.bookForm);
+      const payload = Object.fromEntries(formData);
       callback(payload);
     });
   }

@@ -32,7 +32,7 @@ document.querySelector("#app").innerHTML = `
       <form id="bookForm">
         <div>
           <label for="id-module">Módulo:</label>
-          <select id="id-module" name="module" required>
+          <select id="id-module" name="moduleCode" required>
           <option>- Selecciona un módulo -</option>
           </select>
         </div>
