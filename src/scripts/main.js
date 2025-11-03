@@ -21,15 +21,13 @@ document.querySelector("#app").innerHTML = `
   <div id="main">
     <div id="list"></div>
 
-    <div id="remove">
-      <label for="bookId">ID del libro:</label>
-      <input type="text" id="bookId" placeholder="Introduce el ID" />
-      <button id="removeBtn">Borrar libro</button>
-    </div>
-
     <div id="form">
-      <h2>Añadir libro</h2>
+      <h2 id="form-title">Añadir libro</h2>
       <form id="bookForm">
+      <div id="book-id-container" style="display: none;">
+        <label for="book-id">ID del libro:</label>
+        <input type="text" id="book-id" name="book-id">
+      </div>
         <div>
           <label for="id-module">Módulo:</label>
           <select id="id-module" name="moduleCode" required>
@@ -49,7 +47,7 @@ document.querySelector("#app").innerHTML = `
 
         <div>
           <label for="pages">Páginas:</label>
-          <input type="number" id="pages" name="pages" required min"1">
+          <input type="number" id="pages" name="pages" required min="1">
         </div>
 
         <div>
@@ -70,7 +68,7 @@ document.querySelector("#app").innerHTML = `
 
         <div>
           <label for="comment">Comentarios:</label>
-          <textarea id"comment" name="comment" rows="4" cols="40"></textarea>
+          <textarea id="comment" name="comment" rows="4" cols="40"></textarea>
         </div>
 
         <div>
