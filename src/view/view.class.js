@@ -7,16 +7,6 @@ export default class View {
     this.removeBtn = document.getElementById("removeBtn");
     this.bookForm = document.getElementById("bookForm");
     this.messages = document.getElementById("messages");
-
-    // Datos pillats del formulari \\
-    this.idModule = document.getElementById("id-module");
-    this.publisher = document.getElementById("publisher");
-    this.price = document.getElementById("price");
-    this.pages = document.getElementById("pages");
-    this.statusNew = document.getElementById("new");
-    this.statusGood = document.getElementById("good");
-    this.statusBad = document.getElementById("bad");
-    this.comment = document.getElementById("comment");
   }
 
   renderModulesInSelect(modules) {
@@ -30,23 +20,18 @@ export default class View {
     });
   }
 
-  renderBook(book, modules) {
-  
-    const module = modules.find(
-      (mod) => String(mod.code) === String(book.moduleCode)
-    );
-    const moduleName = module ? module.cliteral : "Módulo desconocido";
-
+  renderBook(book) {
     const bookDiv = document.createElement("div");
     bookDiv.className = "card";
+    bookDiv.id = `book-${book.id}`;
     bookDiv.innerHTML = `
       <img src="${book.photo}" alt="Libro: ${book.id}">
       <div>
-        <h3>${moduleName} (${book.moduleCode})</h3>
+        <h3>${book.moduleCode} (${book.id})</h3>
         <h4>${book.publisher}</h4>
         <p>${book.pages} páginas</p>
         <p>Estado: ${book.status}</p>
-        <p>${book.soldDate ? `Vendido el ${book.soldDate}` : "En venta"}</p> 
+        <p>${this.renderBookSaleDate(book.soldDate)}</p>
         <p>${book.comments}</p>
         <h4>${book.price} €</h4>
       </div>
@@ -54,6 +39,13 @@ export default class View {
     return bookDiv;
   }
 
+  renderBookSaleDate(date) {
+    if (!date) {
+      return "En venta";
+    }
+    const soldLocalDate = new Date(date).toLocaleDateString("es-ES");
+    return `Vendido el ${soldLocalDate}`;
+  }
   renderBooks(books, modules) {
     this.booksList.innerHTML = "";
     books.forEach((book) => {
@@ -88,21 +80,19 @@ export default class View {
     });
   }
 
-  showMessage(type, text) {
-    const alertDiv = document.createElement("div");
-    alertDiv.className = `_tipo-recibido_ alert alert-dismissible`;
-    alertDiv.setAttribute("role", "alert");
-    alertDiv.innerHTML = `
-      ${text}
+  showMessage(type, message) {
+    const newMessage = document.createElement("div");
+    newMessage.className = `${type} alert alert-danger alert-dismissible`;
+    newMessage.setAttribute("role", "alert");
+    newMessage.innerHTML = `
+      ${message}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button>
     `;
-    if (type === "error") {
-      alertDiv.classList.add("alert-danger");
-    } else if (type === "success") {
-      alertDiv.classList.add("alert-success");
-    } else {
-      alertDiv.classList.add("alert-info");
+    this.messages.append(newMessage);
+    if (type !== "error") {
+      setTimeout(() => {
+        newMessage.remove();
+      }, 3000);
     }
-    this.messages.appendChild(alertDiv);
   }
 }

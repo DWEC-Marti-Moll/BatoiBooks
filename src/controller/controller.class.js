@@ -28,21 +28,32 @@ export default class Controller {
   }
 
   async handleSubmitBook(submitBook) {
-    const datos = {
-      ...submitBook,
-      price: parseFloat(submitBook.price) || 0,
-      pages: parseInt(submitBook.pages) || 0,
-      soldDate: submitBook.solDate || "",
-    };
-    const newBook = await this.books.addBook(datos);
-    this.view.renderBook(newBook, this.modules);
+    try {
+      const datos = {
+        ...submitBook,
+        price: parseFloat(submitBook.price) || 0,
+        pages: parseInt(submitBook.pages) || 0,
+        soldDate: submitBook.solDate || "",
+      };
+      const newBook = await this.books.addBook(datos);
+      this.view.renderBook(newBook, this.modules);
 
-    this.view.showMessage("info", "Libro añadido con éxito");
+      this.view.showMessage("info", "Libro añadido con éxito");
+    } catch (error) {
+      this.view.showMessage("error", "Error al añadir el libro: " + error);
+    }
   }
 
-  handleRemoveBook(id) {
-    this.books.removeBook(id);
-    this.view.removeBook(id);
-    this.view.showMessage("info", `Libro con ID ${id} eliminado.`);
+  async handleRemoveBook(id) {
+    try {
+      await this.books.removeBook(id);
+      this.view.removeBook(id);
+      this.view.showMessage(
+        "info",
+        `Libro con ID ${id} eliminado correctamente.`
+      );
+    } catch (err) {
+      this.view.showMessage("error", `Error al eliminar libro: ${err.message}`);
+    }
   }
 }
