@@ -35,6 +35,7 @@ export default class Controller {
 
   async handleSubmitBook(submitBook) {
     try {
+      if (!this.view.validateForm()) return;
       const datos = {
         ...submitBook,
         userId: 2,
@@ -89,6 +90,5 @@ export default class Controller {
     const book = this.books.getBookById(bookId);
     this.currentEditId = bookId;
     this.view.formEdit(book);
-    
   }
 }

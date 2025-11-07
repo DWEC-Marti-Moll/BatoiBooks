@@ -301,3 +301,10 @@ footer {
 .hidden {
   display: none;
 }
+.error {
+  display: block;
+  color: #b30000;
+  font-size: 0.9em;
+  margin-bottom: 4px;
+  min-height: 1em;
+}

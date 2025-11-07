@@ -24,59 +24,67 @@ document.querySelector("#app").innerHTML = `
 
     <div id="form" class="hidden">
       <h2 id="form-title">Añadir libro</h2>
-      <form id="bookForm">
-      <div id="book-id-container" style="display: none;">
-        <label for="book-id">ID del libro:</label>
-        <input type="text" id="book-id" name="book-id">
-      </div>
-        <div>
-          <label for="id-module">Módulo:</label>
-          <select id="id-module" name="moduleCode" required>
-          <option>- Selecciona un módulo -</option>
-          </select>
-        </div>
-        
-        <div>
-          <label for="publisher">Editorial:</label>
-          <input type="text" id="publisher" name="publisher" required/>
-        </div>
-        
-        <div>
-          <label for="price">Precio:</label>
-          <input type="number" id="price" name="price" required min="0" step="0.01">
-        </div>
+      <form id="bookForm" novalidate>
+  <div id="book-id-container" style="display: none;">
+    <label for="book-id">ID del libro:</label>
+    <input type="text" id="book-id" name="book-id">
+  </div>
 
-        <div>
-          <label for="pages">Páginas:</label>
-          <input type="number" id="pages" name="pages" required min="1">
-        </div>
+  <div>
+    <span class="error" id="error-module"></span>
+    <label for="id-module">Módulo:</label>
+    <select id="id-module" name="moduleCode" required>
+      <option>- Selecciona un módulo -</option>
+    </select>
+  </div>
 
-        <div>
-          <span>Estado:</span><br />
-          <label>
-            <input type="radio" name="status" id="new" value="new" required/>
-            Nuevo
-          </label>
-          <label>
-            <input type="radio" name="status" id="good" value="good" />
-            Bueno
-          </label>
-          <label>
-            <input type="radio" name="status" id="bad" value="bad" />
-            Malo
-          </label>
-        </div>
+  <div>
+    <span class="error" id="error-publisher"></span>
+    <label for="publisher">Editorial:</label>
+    <input type="text" id="publisher" name="publisher" required />
+  </div>
 
-        <div>
-          <label for="comment">Comentarios:</label>
-          <textarea id="comment" name="comment" rows="4" cols="40"></textarea>
-        </div>
+  <div>
+    <span class="error" id="error-price"></span>
+    <label for="price">Precio:</label>
+    <input type="number" id="price" name="price" required min="0" step="0.01">
+  </div>
 
-        <div>
-          <button type="submit">Guardar</button>
-          <button type="reset">Reset</button>
-        </div>
-      </form>
+  <div>
+    <span class="error" id="error-pages"></span>
+    <label for="pages">Páginas:</label>
+    <input type="number" id="pages" name="pages" required min="1">
+  </div>
+
+  <div>
+    <span class="error" id="error-status"></span>
+    <span>Estado:</span><br />
+    <label>
+      <input type="radio" name="status" id="new" value="new" required />
+      Nuevo
+    </label>
+    <label>
+      <input type="radio" name="status" id="good" value="good" />
+      Bueno
+    </label>
+    <label>
+      <input type="radio" name="status" id="bad" value="bad" />
+      Malo
+    </label>
+  </div>
+
+  <div>
+    <span class="error" id="error-comment"></span>
+    <label for="comment">Comentarios:</label>
+    <textarea id="comment" name="comment" rows="4" cols="40"></textarea>
+  </div>
+
+  <div>
+    <button type="submit">Guardar</button>
+    <button type="reset">Reset</button>
+  </div>
+</form>
+
     </div>
 
     <div id="about" class="hidden">

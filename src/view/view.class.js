@@ -173,4 +173,59 @@ export default class View {
       }, 3000);
     }
   }
+
+  validateForm() {
+    const form = document.getElementById("bookForm");
+
+    // Limpia errores anteriores
+    form.querySelectorAll(".error").forEach((span) => (span.textContent = ""));
+
+    const idModule = form["id-module"].value.trim();
+    const publisher = form.publisher.value.trim();
+    const price = form.price.value.trim();
+    const pages = form.pages.value.trim();
+    const status = form.querySelector('input[name="status"]:checked');
+
+    let valid = true;
+
+    if (!idModule || idModule === "- Selecciona un módulo -") {
+      document.getElementById("error-module").textContent =
+        "Selecciona un módulo.";
+      valid = false;
+    }
+
+    if (!publisher) {
+      document.getElementById("error-publisher").textContent =
+        "La editorial es obligatoria.";
+      valid = false;
+    }
+
+    if (price === "") {
+      document.getElementById("error-price").textContent =
+        "El precio es obligatorio.";
+      valid = false;
+    } else if (isNaN(price) || parseFloat(price) < 0) {
+      document.getElementById("error-price").textContent =
+        "Debe ser un número mayor o igual que 0.";
+      valid = false;
+    }
+
+    if (pages === "") {
+      document.getElementById("error-pages").textContent =
+        "El número de páginas es obligatorio.";
+      valid = false;
+    } else if (!Number.isInteger(Number(pages)) || parseInt(pages) < 0) {
+      document.getElementById("error-pages").textContent =
+        "Debe ser un número entero mayor o igual que 0.";
+      valid = false;
+    }
+
+    if (!status) {
+      document.getElementById("error-status").textContent =
+        "Selecciona un estado.";
+      valid = false;
+    }
+
+    return valid;
+  }
 }
