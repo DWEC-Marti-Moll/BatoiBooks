@@ -23,7 +23,7 @@ export default class Controller {
         this.cart.populate(),
       ]);
       this.view.renderModulesInSelect(this.modules.data);
-      this.view.renderBooks(this.books.data);
+      this.view.renderBooks(this.books.data, this.modules.data);
       this.view.setBookSubmitHandler(this.handleSubmitBook.bind(this));
       this.view.setBookRemoveHandler(this.handleRemoveBook.bind(this));
       this.view.setAddToCartHandler(this.handleAddToCart.bind(this));
@@ -46,11 +46,11 @@ export default class Controller {
       if (this.currentEditId) {
         datos.id = this.currentEditId;
         const updatedBook = await this.books.changeBook(datos);
-        this.view.updateBook(updatedBook);
+        this.view.updateBook(updatedBook, this.modules.data);
         this.view.showMessage("info", "Libro modificado con éxito");
       } else {
         const newBook = await this.books.addBook(datos);
-        const bookDiv = this.view.renderBook(newBook);
+        const bookDiv = this.view.renderBook(newBook, this.modules.data);
         this.view.booksList.appendChild(bookDiv);
         this.view.showMessage("info", "Libro añadido con éxito");
       }

@@ -19,14 +19,16 @@ export default class View {
     });
   }
 
-  renderBook(book) {
+  renderBook(book, modules) {
+    const module = modules.find((mod) => mod.code === book.moduleCode);
+    const moduleName = module ? module.cliteral : "Módulo desconocido";
     const bookDiv = document.createElement("div");
     bookDiv.className = "card";
     bookDiv.id = `book-${book.id}`;
     bookDiv.innerHTML = `
     <img src="${book.photo}" alt="Libro: ${book.id}">
     <div>
-      <h3>${book.moduleCode} (${book.id})</h3>
+      <h3>${moduleName} (${book.id})</h3>
       <h4>${book.publisher}</h4>
       <p>${book.pages} páginas</p>
       <p>Estado: ${book.status}</p>
@@ -58,10 +60,10 @@ export default class View {
     return `Vendido el ${soldLocalDate}`;
   }
 
-  renderBooks(books) {
+  renderBooks(books, modules) {
     this.booksList.innerHTML = "";
     books.forEach((book) => {
-      const bookDiv = this.renderBook(book);
+      const bookDiv = this.renderBook(book, modules);
       this.booksList.appendChild(bookDiv);
     });
   }
@@ -141,10 +143,10 @@ export default class View {
     if (statusRadio) statusRadio.checked = true;
   }
 
-  updateBook(book) {
+  updateBook(book, modules) {
     const bookDiv = document.getElementById(`book-${book.id}`);
     if (!bookDiv) return;
-    bookDiv.innerHTML = this.renderBook(book).innerHTML;
+    bookDiv.innerHTML = this.renderBook(book, modules).innerHTML;
   }
 
   resetForm() {
