@@ -1,6 +1,6 @@
 export default class View {
   constructor() {
-    this.booksList = document.getElementById("list");
+    this.booksList = document.getElementById("books-container");
     this.about = document.getElementById("about");
     this.form = document.getElementById("form");
     this.removeBtn = document.getElementsByClassName("removeBtn");
@@ -123,6 +123,7 @@ export default class View {
   }
 
   formEdit(book) {
+    window.location.hash = "#form";
     document.getElementById("form-title").textContent = "Editar libro";
 
     const idContainer = document.getElementById("book-id-container");

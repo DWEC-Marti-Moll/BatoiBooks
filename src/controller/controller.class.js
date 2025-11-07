@@ -60,6 +60,7 @@ export default class Controller {
     } catch (error) {
       this.view.showMessage("error", "Error al guardar el libro: " + error);
     }
+    window.location.hash = "#list";
   }
 
   async handleRemoveBook(id) {
@@ -88,5 +89,6 @@ export default class Controller {
     const book = this.books.getBookById(bookId);
     this.currentEditId = bookId;
     this.view.formEdit(book);
+    
   }
 }

@@ -189,7 +189,7 @@ button[type="reset"] {
 }
 
 /* ===== LISTADO DE LIBROS ===== */
-#list {
+#books-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1.5rem;
@@ -197,7 +197,7 @@ button[type="reset"] {
 }
 
 /* Cada libro */
-#list .card {
+#books-container .card {
   background-color: #2E2E50;
   color: inherit;
   border-radius: 12px;
@@ -210,13 +210,13 @@ button[type="reset"] {
   text-align: center;
 }
 
-#list .card:hover {
+#books-container .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* Imagen del libro */
-#list .card img {
+#books-container .card img {
   width: 100%;
   max-width: 180px;
   height: auto;
@@ -227,20 +227,20 @@ button[type="reset"] {
 }
 
 /* Títulos y texto */
-#list .card h3 {
+#books-container .card h3 {
   font-size: 1.1rem;
   color: var(--primary);
   margin-bottom: 0.4rem;
 }
 
-#list .card h4 {
+#books-container .card h4 {
   font-size: 0.95rem;
   font-weight: 500;
   color: #ccc;
   margin-bottom: 0.8rem;
 }
 
-#list .card p {
+#books-container .card p {
   font-size: 0.9rem;
   color: #bbb;
   margin-bottom: 0.3rem;
@@ -297,4 +297,7 @@ footer {
   #list .card p {
     color: #666;
   }
+}
+.hidden {
+  display: none;
 }

@@ -1,6 +1,7 @@
 import "../styles/style.css";
 import batoiLogo from "/logoBatoi.png";
 import Controller from "../controller/controller.class";
+import Router from "../services/router";
 
 document.querySelector("#app").innerHTML = `
   <header>
@@ -19,9 +20,9 @@ document.querySelector("#app").innerHTML = `
   <div id="messages"></div>
 
   <div id="main">
-    <div id="list"></div>
+    <div id="list" class="hidden"><div id="books-container"></div></div>
 
-    <div id="form">
+    <div id="form" class="hidden">
       <h2 id="form-title">Añadir libro</h2>
       <form id="bookForm">
       <div id="book-id-container" style="display: none;">
@@ -78,7 +79,7 @@ document.querySelector("#app").innerHTML = `
       </form>
     </div>
 
-    <div id="about">
+    <div id="about" class="hidden">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi.</p>
     </div>
   </div>
@@ -90,4 +91,6 @@ document.querySelector("#app").innerHTML = `
 document.addEventListener("DOMContentLoaded", () => {
   const myController = new Controller();
   myController.init();
+  const router = new Router();
+  router.init();
 });
