@@ -28,6 +28,7 @@ export default class Controller {
       this.view.setBookRemoveHandler(this.handleRemoveBook.bind(this));
       this.view.setAddToCartHandler(this.handleAddToCart.bind(this));
       this.view.setEditBookHandler(this.handleEditBook.bind(this));
+      this.view.setModuleChangeHandler(this.handleModuleChange.bind(this));
     } catch (err) {
       this.view.showMessage("error", `Error: ${err.message}`);
     }
@@ -90,5 +91,23 @@ export default class Controller {
     const book = this.books.getBookById(bookId);
     this.currentEditId = bookId;
     this.view.formEdit(book);
+  }
+
+  async handleModuleChange(moduleCode) {
+    const userId = 2;
+    try {
+      const exists = await this.books.bookExists(userId, moduleCode);
+      if (exists) {
+        this.view.setModuleCustomError("Ya tienes un libro de este módulo.");
+      } else {
+        this.view.setModuleCustomError("");
+      }
+      this.view.validateForm();
+    } catch (err) {
+      this.view.showMessage(
+        "error",
+        "Error al comprobar módulo: " + err.message
+      );
+    }
   }
 }

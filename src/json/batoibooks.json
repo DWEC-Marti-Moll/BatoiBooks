@@ -2196,6 +2196,18 @@
       "comments": "",
       "soldDate": "",
       "id": "10"
+    },
+    {
+      "id": "654c",
+      "book-id": "",
+      "moduleCode": "0013",
+      "publisher": "McGraw-Hill",
+      "price": 41,
+      "pages": 99,
+      "status": "new",
+      "comment": "",
+      "userId": 2,
+      "soldDate": ""
     }
   ]
 }

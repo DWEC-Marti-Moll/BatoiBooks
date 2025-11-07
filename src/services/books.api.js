@@ -36,3 +36,19 @@ export async function changeDBBook(book) {
   if (!response.ok) throw new Error("Error al intentar cambiar libro");
   return await response.json();
 }
+
+export async function checkBookExists(userId, moduleCode) {
+  const response = await fetch(
+    `${URL}?userId=${Number(userId)}&moduleCode=${encodeURIComponent(
+      String(moduleCode)
+    )}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Error al comprobar si el libro existe");
+  }
+
+  const data = await response.json();
+
+  return data.length > 0;
+}

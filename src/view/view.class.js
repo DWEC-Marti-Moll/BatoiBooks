@@ -6,6 +6,7 @@ export default class View {
     this.removeBtn = document.getElementsByClassName("removeBtn");
     this.bookForm = document.getElementById("bookForm");
     this.messages = document.getElementById("messages");
+    this.initValidation();
   }
 
   renderModulesInSelect(modules) {
@@ -174,58 +175,147 @@ export default class View {
     }
   }
 
+  setModuleChangeHandler(handler) {
+    const select = document.getElementById("id-module");
+    select.addEventListener("change", (e) => {
+      const moduleCode = e.target.value;
+      if (moduleCode && moduleCode !== "- Selecciona un módulo -") {
+        handler(moduleCode);
+      }
+    });
+  }
+
+  setModuleCustomError(message) {
+    const select = document.getElementById("id-module");
+    const errorSpan = select.parentElement.querySelector(".error");
+
+    select.setCustomValidity(message);
+    if (message) {
+      errorSpan.textContent = message;
+      select.classList.add("error-border");
+    } else {
+      errorSpan.textContent = "";
+      select.classList.remove("error-border");
+    }
+  }
+
+  initValidation() {
+    const form = this.bookForm;
+
+    // Validar cada campo al escribir o cambiar
+    form
+      .querySelector("#id-module")
+      .addEventListener("change", () => this.validateModule());
+    form
+      .querySelector("#publisher")
+      .addEventListener("input", () => this.validatePublisher());
+    form
+      .querySelector("#price")
+      .addEventListener("input", () => this.validatePrice());
+    form
+      .querySelector("#pages")
+      .addEventListener("input", () => this.validatePages());
+    form
+      .querySelectorAll('input[name="status"]')
+      .forEach((radio) =>
+        radio.addEventListener("change", () => this.validateStatus())
+      );
+  }
+
+  validateModule() {
+    const idModule = this.bookForm.querySelector("#id-module");
+    const errorSpan = document.getElementById("error-module");
+    errorSpan.textContent = "";
+    idModule.classList.remove("error-border");
+
+    if (!idModule.value || idModule.value === "- Selecciona un módulo -") {
+      errorSpan.textContent = "Selecciona un módulo.";
+      idModule.classList.add("error-border");
+      idModule.setCustomValidity("Selecciona un módulo.");
+      return false;
+    } else if (idModule.validationMessage) {
+      errorSpan.textContent = idModule.validationMessage;
+      idModule.classList.add("error-border");
+      return false;
+    }
+
+    idModule.setCustomValidity("");
+    return true;
+  }
+
+  validatePublisher() {
+    const input = this.bookForm.querySelector("#publisher");
+    const errorSpan = document.getElementById("error-publisher");
+    errorSpan.textContent = "";
+    input.classList.remove("error-border");
+
+    if (!input.value.trim()) {
+      errorSpan.textContent = "La editorial es obligatoria.";
+      input.classList.add("error-border");
+      return false;
+    }
+    return true;
+  }
+
+  validatePrice() {
+    const input = this.bookForm.querySelector("#price");
+    const errorSpan = document.getElementById("error-price");
+    errorSpan.textContent = "";
+    input.classList.remove("error-border");
+
+    const value = input.value.trim();
+    if (value === "") {
+      errorSpan.textContent = "El precio es obligatorio.";
+      input.classList.add("error-border");
+      return false;
+    } else if (isNaN(value) || parseFloat(value) < 0) {
+      errorSpan.textContent = "Debe ser un número mayor o igual que 0.";
+      input.classList.add("error-border");
+      return false;
+    }
+    return true;
+  }
+
+  validatePages() {
+    const input = this.bookForm.querySelector("#pages");
+    const errorSpan = document.getElementById("error-pages");
+    errorSpan.textContent = "";
+    input.classList.remove("error-border");
+
+    const value = input.value.trim();
+    if (value === "") {
+      errorSpan.textContent = "El número de páginas es obligatorio.";
+      input.classList.add("error-border");
+      return false;
+    } else if (!Number.isInteger(Number(value)) || parseInt(value) < 0) {
+      errorSpan.textContent = "Debe ser un número entero mayor o igual que 0.";
+      input.classList.add("error-border");
+      return false;
+    }
+    return true;
+  }
+
+  validateStatus() {
+    const radios = this.bookForm.querySelectorAll('input[name="status"]');
+    const errorSpan = document.getElementById("error-status");
+    errorSpan.textContent = "";
+    radios.forEach((r) => r.classList.remove("error-border"));
+
+    const checked = this.bookForm.querySelector('input[name="status"]:checked');
+    if (!checked) {
+      errorSpan.textContent = "Selecciona un estado.";
+      radios.forEach((r) => r.classList.add("error-border"));
+      return false;
+    }
+    return true;
+  }
+
   validateForm() {
-    const form = document.getElementById("bookForm");
-
-    // Limpia errores anteriores
-    form.querySelectorAll(".error").forEach((span) => (span.textContent = ""));
-
-    const idModule = form["id-module"].value.trim();
-    const publisher = form.publisher.value.trim();
-    const price = form.price.value.trim();
-    const pages = form.pages.value.trim();
-    const status = form.querySelector('input[name="status"]:checked');
-
-    let valid = true;
-
-    if (!idModule || idModule === "- Selecciona un módulo -") {
-      document.getElementById("error-module").textContent =
-        "Selecciona un módulo.";
-      valid = false;
-    }
-
-    if (!publisher) {
-      document.getElementById("error-publisher").textContent =
-        "La editorial es obligatoria.";
-      valid = false;
-    }
-
-    if (price === "") {
-      document.getElementById("error-price").textContent =
-        "El precio es obligatorio.";
-      valid = false;
-    } else if (isNaN(price) || parseFloat(price) < 0) {
-      document.getElementById("error-price").textContent =
-        "Debe ser un número mayor o igual que 0.";
-      valid = false;
-    }
-
-    if (pages === "") {
-      document.getElementById("error-pages").textContent =
-        "El número de páginas es obligatorio.";
-      valid = false;
-    } else if (!Number.isInteger(Number(pages)) || parseInt(pages) < 0) {
-      document.getElementById("error-pages").textContent =
-        "Debe ser un número entero mayor o igual que 0.";
-      valid = false;
-    }
-
-    if (!status) {
-      document.getElementById("error-status").textContent =
-        "Selecciona un estado.";
-      valid = false;
-    }
-
-    return valid;
+    const v1 = this.validateModule();
+    const v2 = this.validatePublisher();
+    const v3 = this.validatePrice();
+    const v4 = this.validatePages();
+    const v5 = this.validateStatus();
+    return v1 && v2 && v3 && v4 && v5;
   }
 }
