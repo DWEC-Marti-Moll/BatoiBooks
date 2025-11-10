@@ -12,7 +12,7 @@ document.querySelector("#app").innerHTML = `
   <nav>
     <ul>
       <li><a href="#list">Ver Libros</a></li>
-      <li><a href="#form">Añadir Libro</a></li>
+      <li><a href="#form" id="add-new-book">Añadir Libro</a></li>
       <li><a href="#about">Acerca de...</a></li>
     </ul>
   </nav>
@@ -25,7 +25,7 @@ document.querySelector("#app").innerHTML = `
     <div id="form" class="hidden">
       <h2 id="form-title">Añadir libro</h2>
       <form id="bookForm" novalidate>
-  <div id="book-id-container" style="display: none;">
+  <div id="book-id-container" class="id-hidden">
     <label for="book-id">ID del libro:</label>
     <input type="text" id="book-id" name="book-id">
   </div>

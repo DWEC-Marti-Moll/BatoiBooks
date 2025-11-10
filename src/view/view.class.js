@@ -119,6 +119,9 @@ export default class View {
 
       const bookDiv = editBtn.closest(".card");
       const bookId = bookDiv.querySelector("img").alt.split(": ")[1];
+      document
+        .getElementById("book-id-container")
+        .classList.remove("id-hidden");
       callback(bookId);
     });
   }
@@ -154,6 +157,7 @@ export default class View {
   resetForm() {
     document.getElementById("form-title").textContent = "Añadir libro";
     const idInput = document.getElementById("book-id");
+    document.getElementById("book-id-container").classList.add("id-hidden");
     idInput.disabled = false;
     idInput.value = "";
     this.bookForm.reset();
@@ -317,5 +321,13 @@ export default class View {
     const v4 = this.validatePages();
     const v5 = this.validateStatus();
     return v1 && v2 && v3 && v4 && v5;
+  }
+  setNewBookHandler(callback) {
+    const newBookBtn = document.getElementById("add-new-book");
+    if (newBookBtn) {
+      newBookBtn.addEventListener("click", () => {
+        callback();
+      });
+    }
   }
 }

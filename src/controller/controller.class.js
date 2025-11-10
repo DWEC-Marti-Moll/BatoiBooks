@@ -29,6 +29,10 @@ export default class Controller {
       this.view.setAddToCartHandler(this.handleAddToCart.bind(this));
       this.view.setEditBookHandler(this.handleEditBook.bind(this));
       this.view.setModuleChangeHandler(this.handleModuleChange.bind(this));
+      this.view.setNewBookHandler(() => {
+        this.currentEditId = null;
+        this.view.resetForm();
+      });
     } catch (err) {
       this.view.showMessage("error", `Error: ${err.message}`);
     }
